@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\View\View; 
 use Illuminate\Support\Facades\DB;     // Importing the DB facade to interact with the database
