@@ -157,6 +157,10 @@ class DemoController extends Controller
         // return redirect('/edit_userdata');
     }
 
+    public function login(){
+        $user_id  = $_SESSION['Userid'] ;
+    }git 
+
 
 }
 
