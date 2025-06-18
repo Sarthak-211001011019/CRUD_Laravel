@@ -159,7 +159,7 @@ class DemoController extends Controller
 
     public function login(){
         $user_id  = $_SESSION['Userid'] ;
-    }git 
+    }
 
 
 }
