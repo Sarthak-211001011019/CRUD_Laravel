@@ -37,4 +37,10 @@ Route::get('/display', [DemoController::class, 'display_data']);
 Route::get('/delete{delete_id}',[DemoController::class,'delete_user']);
 Route::get('/edit_details{edit_id}',[DemoController::class,'edit_details']);
 Route::post('/update_details',[DemoController::class,'update_details']);
+Route ::get ('/sign_in', [DemoController::class, 'user_login']);
+Route::post('/login_details',[DemoController::class,'login_details']);
+Route::get('/login_rout',[DemoController::class,'user_display']);
+Route::get('/change_pass_rout{changepass_id}',[DemoController::class,'change_pass']);
+Route::post('/change_pass_logic',[DemoController::class,'Newpass_logic']);
+
 

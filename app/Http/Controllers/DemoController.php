@@ -53,7 +53,7 @@ class DemoController extends Controller
         DB::table('1_laravel')->insert($SubmitData); // Inserting the data into the 1-laravel table in the database
         // return view('Signup_Form')->with('userData', $SubmitData);  // Passing the submitted data to the signup_form page for viewing (using view  helper function)
           // You can also save the data to the database or perform other actions here
-         return redirect('/display');                                                                          
+         return redirect('/sign_in');                                                                          
     }
 
     public function display_data(Request $req)
@@ -156,9 +156,86 @@ class DemoController extends Controller
         // return redirect('/edit_userdata');
     }
 
-    public function login(){
-        $user_id  = $_SESSION['Userid'] ;
+    public function user_login()
+    {
+        return view ('/sign_in');   // sign_in.blade.php 
     }
+
+    public function login_details(Request $req)
+    {
+         $emailphone = $req->input('EmailorPhone');
+         $password = $req->input('Password');
+         $login_data = DB::table('1_laravel')->where('Email', $emailphone)->orWhere('Phone',$emailphone)->get()->first();
+
+         if(empty($login_data)){
+            return redirect('/sign_in')->with('Message','User Not Found  !');
+         }
+         else{
+            $db_password = $login_data->Password;
+            if($db_password === $password)
+            {
+                $user_id = $login_data->User_ID;
+                $user_name = $login_data->Name;
+                $req->session()->put('session_id', $user_id);
+                $req->session()->put('session_name', $user_name);
+                return redirect('/login_rout');  // go to login rout in  web.php
+            }
+            else{
+                return redirect('/sign_in')->with('Message','Password Dosent Match');
+            } 
+         }
+
+    }
+
+    public function user_display()
+    {
+        $user_id = session('session_id');
+        $user_name = session('session_name');
+        $fetchdata= DB::table('1_laravel')->where('User_ID',$user_id)->get()->first();
+        return view('/login_display')->with('alluserinfo', $fetchdata)
+                                     ->with('Message Login Sucess'.$user_name);
+    }
+
+    public function change_pass($id){
+        return view ('/change_password')->with('user_id',$id); // change_password.blade.php
+    }
+
+    public function Newpass_logic(Request $req)
+    {   
+        $user_id = $req->input('User_ID');
+        $pass_fetch = DB::table('1_laravel')->where('User_ID',$user_id)->get()->first();
+
+        $old_pass  = $req->input('OldPassword');
+        $new_pass = $req-> input('NewPassword');
+        $con_pass = $req-> input('ConPassword');
+
+        if ($old_pass !== $pass_fetch->Password) {
+	    echo "<script>alert('Wrong Old Password Try Again')</script>";
+	    return view('/change_password');
+	    exit;
+	    }
+
+        if ($old_pass === $new_pass) {
+        echo "<script>alert('Old Password & New Password must be Different. Try Again')</script>";
+        return view('/change_password');
+        exit;
+        }
+
+        if ($new_pass !== $con_pass) {
+        echo "<script>alert('New Password & Confirm Password must be the Same. Try Again')</script>";
+        return view('/change_password');
+        exit;
+        }
+
+        $password = ['Password'=>$new_pass];
+
+        $update_pass = DB::table('1_laravel')->where('User_ID',$user_id)->update($password);
+         echo "<script>alert('Update Success')</script>";
+
+       
+    }// Password Change 
+
+
 
 
 }
