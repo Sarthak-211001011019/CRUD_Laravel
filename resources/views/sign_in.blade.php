@@ -11,7 +11,7 @@
         <header class= "header modal-header" >
             <h3 align="center">Login Page</h3>
         </header>
-        @if(session('Message'))    // Variable from demeocontroller page  
+        @if(session('Message'))    <!--Variable from demeocontroller page-->  
         <div class="alert alert-danger">
         {{session('Message')}}
         </div>

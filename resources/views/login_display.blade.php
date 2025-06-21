@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <title>User_Display</title>
 </head>
 <body> 
     
-<!-- Input Data Show In Same Page -->
- @if(session('Message'))
- <script>alert({{session('Message')}})</script>
- @endif
+@if(session('Message'))
+    <div class="alert alert-success">
+        {{ session('Message')}}
+        {{session('session_name')}}
+    </div>
+@endif
+@if(session('Message'))
+    <script>
+    alert("{{session('Message')}}");
+    </script>
+@endif
+
          @if(isset($alluserinfo))
             <div class="table -responsive mt-5">
                 <h4>User Data:</h4>

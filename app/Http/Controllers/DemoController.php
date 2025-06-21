@@ -53,7 +53,7 @@ class DemoController extends Controller
         DB::table('1_laravel')->insert($SubmitData); // Inserting the data into the 1-laravel table in the database
         // return view('Signup_Form')->with('userData', $SubmitData);  // Passing the submitted data to the signup_form page for viewing (using view  helper function)
           // You can also save the data to the database or perform other actions here
-         return redirect('/sign_in');                                                                          
+         return redirect('/sign_in');      // remember redirect means goin to rout(web.php ->controller->view)                                                                      
     }
 
     public function display_data(Request $req)
@@ -64,36 +64,12 @@ class DemoController extends Controller
        
     } 
 
-    // public function edit_data($User_ID)
+    // public function edit_userdata($User_ID)
     // {
     // $record = DB::table('1_laravel')->where('User_ID', $User_ID)->first();  // Fetch user data
     // return view('edit_form')->with('userdetails', $record);              // Pass it to view
 
-    // }
-
-    // public function update_form(Request $req, $User_ID)
-    // {
-    //     // dd($req->all()); // This will dump and die, showing all the data submitted by the Signup form
-    //     $req->validate(
-    //         [
-    //             'Name' => "required|regex:/^[A-Za-z ]{3,30}$/",
-    //             'Age' => "required|integer|between:18,40",
-    //             'Email' => "required|regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/",
-    //             'Phone' => "required|regex:/^[6-9][0-9]{9}$/",
-    //             'Pass' => "required|regex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/",
-    //             'Image' => "mimes:jpg,jpeg,png,gif|max: 4096"   //kb
-    //         ]
-    //     );
-
-    //     $name = $req->input('Name'); // Accessing the 'name' field from Signup
-    //     $age = $req->input('Age'); // Accessing the 'age' field from the Signup
-    //     $email = $req->input('Email'); // Accessing the 'email' field from the Signup
-    //     $phone = $req->input('Phone'); // Accessing the 'phone' field from the Signup
-    //     $password = $req->input('Pass'); // Accessing the 'password' field from the Signup
-        
-
-        
-    // }  
+    // } 
     
     // public function delete_data($User_ID)
     // {
@@ -110,10 +86,10 @@ class DemoController extends Controller
         return redirect('/display');
     }
 
-    public function edit_details($id)
+    public function edit_user_details($id)
     {
         $details = DB::table('1_laravel')->where('User_ID',$id)->get()->first();  // first() this only shows index-0 data
-        return view('/edit_userdata')->with('Userdata',$details);
+        return view('edit_userdata')->with('Userdata',$details);
     }
 
     public function update_details(Request $req)
@@ -153,6 +129,7 @@ class DemoController extends Controller
         DB::table('1_laravel')->where('User_ID', $user_id)->update($SubmitData);
 
         echo "<script>alert('Update Success')</script>";
+        return redirect ('/login_display_rout');
         // return redirect('/edit_userdata');
     }
 
@@ -193,12 +170,12 @@ class DemoController extends Controller
         $user_name = session('session_name');
         $fetchdata= DB::table('1_laravel')->where('User_ID',$user_id)->get()->first();
 
-        return view('/login_display')->with('alluserinfo', $fetchdata)
-                                     ->with('Message Login Sucess'.$user_name);
+        return view('login_display')->with('alluserinfo', $fetchdata)
+                                     ->with('Message','Login Sucess');
     }
 
     public function change_pass(){
-        return view ('/change_password'); // change_password.blade.php
+        return view ('change_password'); // change_password.blade.php
     }
 
     public function Newpass_logic(Request $req)
@@ -231,17 +208,16 @@ class DemoController extends Controller
         $password = ['Password'=>$new_pass];
 
         $update_pass = DB::table('1_laravel')->where('User_ID',$user_id)->update($password);
-         echo "<script>alert('Password Changed')</script>";
-         return redirect ('login_display')->with('Mesage','Password Changed');
-
-       
+        if($update_pass){
+            // echo "<script>alert('Password Changed')</script>";
+            return redirect ('/login_display_rout')->with('Message','Password Changed');
+        }
+         
     }// Password Change 
 
 
 
-
-}
-
+} /// Democontroller close 
 
 
 
@@ -280,15 +256,31 @@ class DemoController extends Controller
 
 
 
+/////////////////////////////////////////        Notes       \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
         // You can access individual fields like this:
         // echo $req->input('name'); // Assuming you have a field named 'name' in your form
         // echo $req->input('email'); // Assuming you have a field named 'email' in your form
         // echo $req->input('password'); // Assuming you have a field named 'password' in your form
+
+
         // Alternatively, you can use the shorthand:
         // echo $req->name; // Assuming you have a field named 'name' in your form
         // echo $req->email; // Assuming you have a field named 'email' in your form
         // echo $req->password; // Assuming you have a field named 'password' in your form
+
+
+       // You can also validate the request data here if needed
+            // For example:
+        // $req->validate([
+        //     'name' => 'required|max:255',    
+        //     'email' => 'required|email',
+        //     'password' => 'required|min:6',
+        // ]);
+        // After validation, you can process the data, save it to the database, etc.
+        // return redirect('/first')->with('success', 'Form submitted successfully!'); // Redirecting to first_example with a success message
+
+
         // Here you can process the form data as needed
         // For example, you can save it to the database, send an email, etc.
         // For now, we are just dumping the data to see what was submitted
@@ -302,12 +294,5 @@ class DemoController extends Controller
         // If you want to redirect to a different route after processing the form, you can do so
         // return redirect('/some-route')->with('success', 'Form submitted successfully!'); // Redirecting to some route with a success message
         // Note: Make sure to handle the request data securely, especially if it contains sensitive information like passwords.
-        // You can also validate the request data here if needed
-        // For example:
-        // $req->validate([
-        //     'name' => 'required|max:255',    
-        //     'email' => 'required|email',
-        //     'password' => 'required|min:6',
-        // ]);
-        // After validation, you can process the data, save it to the database, etc.
-        // return redirect('/first')->with('success', 'Form submitted successfully!'); // Redirecting to first_example with a success message
+       
+    

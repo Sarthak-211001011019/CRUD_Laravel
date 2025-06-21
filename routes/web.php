@@ -30,12 +30,12 @@ Route::post('/submit', [DemoController::class, 'submit_form']);        // new fu
 Route::get('/display', [DemoController::class, 'display_data']);
 
 // Update and Delete Routes
-// Route::get('/edit_form/{User_ID}', [DemoController::class, 'edit_data']);
+// Route::get('/edit_form/{User_ID}', [DemoController::class, 'edit_userdata']);
 // Route::post('/update_form/{User_ID}', [DemoController::class, 'update_form']);   
 // Route::get('/delete_form/{User_ID}', [DemoController::class, 'delete_data']);
 
 Route::get('/delete{delete_id}',[DemoController::class,'delete_user']);
-Route::get('/edit_details{edit_id}',[DemoController::class,'edit_details']);
+Route::get('/edit_details{edit_id}',[DemoController::class,'edit_user_details']);
 Route::post('/update_details',[DemoController::class,'update_details']);
 // login with session 
 Route ::get ('/sign_in', [DemoController::class, 'user_login']);
