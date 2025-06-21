@@ -161,7 +161,7 @@ class DemoController extends Controller
         return view ('/sign_in');   // sign_in.blade.php 
     }
 
-    public function login_details(Request $req)
+    public function login_details_check(Request $req)
     {
          $emailphone = $req->input('EmailorPhone');
          $password = $req->input('Password');
@@ -178,7 +178,7 @@ class DemoController extends Controller
                 $user_name = $login_data->Name;
                 $req->session()->put('session_id', $user_id);
                 $req->session()->put('session_name', $user_name);
-                return redirect('/login_rout');  // go to login rout in  web.php
+                return redirect('/login_display_rout');  // go to login rout in  web.php
             }
             else{
                 return redirect('/sign_in')->with('Message','Password Dosent Match');
