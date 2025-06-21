@@ -18,7 +18,7 @@
         <script>alert('Message')</script>
           @endif
         
-        <form method="POST" action="{{url('/login_details')}}">
+        <form method="POST" action="{{url('/login_details_rout')}}">
           @csrf
          <div class="form-group">
                 <label for="name">Email:</label>

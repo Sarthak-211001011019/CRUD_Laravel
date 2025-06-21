@@ -39,7 +39,7 @@ Route::get('/edit_details{edit_id}',[DemoController::class,'edit_details']);
 Route::post('/update_details',[DemoController::class,'update_details']);
 // login with session 
 Route ::get ('/sign_in', [DemoController::class, 'user_login']);
-Route::post('/login_details',[DemoController::class,'login_details_check']);
+Route::post('/login_details_rout',[DemoController::class,'login_details_check']);
 Route::get('/login_display_rout',[DemoController::class,'user_display']);
 //chnage passsword
 Route::get('/change_pass_rout{changepass_id}',[DemoController::class,'change_pass']);
