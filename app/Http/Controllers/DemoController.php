@@ -192,17 +192,18 @@ class DemoController extends Controller
         $user_id = session('session_id');
         $user_name = session('session_name');
         $fetchdata= DB::table('1_laravel')->where('User_ID',$user_id)->get()->first();
+
         return view('/login_display')->with('alluserinfo', $fetchdata)
                                      ->with('Message Login Sucess'.$user_name);
     }
 
-    public function change_pass($id){
-        return view ('/change_password')->with('user_id',$id); // change_password.blade.php
+    public function change_pass(){
+        return view ('/change_password'); // change_password.blade.php
     }
 
     public function Newpass_logic(Request $req)
     {   
-        $user_id = $req->input('User_ID');
+        $user_id = session()->get('session_id');  // getting session id from above class
         $pass_fetch = DB::table('1_laravel')->where('User_ID',$user_id)->get()->first();
 
         $old_pass  = $req->input('OldPassword');
@@ -211,26 +212,27 @@ class DemoController extends Controller
 
         if ($old_pass !== $pass_fetch->Password) {
 	    echo "<script>alert('Wrong Old Password Try Again')</script>";
-	    return view('/change_password');
+	    return view('change_password');   // redirect to change_password.blade.php
 	    exit;
 	    }
 
         if ($old_pass === $new_pass) {
         echo "<script>alert('Old Password & New Password must be Different. Try Again')</script>";
-        return view('/change_password');
+        return view('change_password');   // redirect to change_password.blade.php
         exit;
         }
 
         if ($new_pass !== $con_pass) {
         echo "<script>alert('New Password & Confirm Password must be the Same. Try Again')</script>";
-        return view('/change_password');
+        return view('change_password');   // redirect to change_password.blade.php
         exit;
         }
 
         $password = ['Password'=>$new_pass];
 
         $update_pass = DB::table('1_laravel')->where('User_ID',$user_id)->update($password);
-         echo "<script>alert('Update Success')</script>";
+         echo "<script>alert('Password Changed')</script>";
+         return redirect ('login_display')->with('Mesage','Password Changed');
 
        
     }// Password Change 

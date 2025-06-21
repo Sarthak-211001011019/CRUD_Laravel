@@ -8,9 +8,12 @@
 <body> 
     
 <!-- Input Data Show In Same Page -->
+ @if(session('Message'))
+ <script>alert({{session('Message')}})</script>
+ @endif
          @if(isset($alluserinfo))
             <div class="table -responsive mt-5">
-                <h4>Submitted Data:</h4>
+                <h4>User Data:</h4>
 
                 <table class="table table-bordered" border="1" cellpadding="10" cellspacing="0">
                     <thead>
@@ -37,7 +40,7 @@
                                 <a href="{{ url('/delete_form/'.$alluserinfo->User_ID) }}" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a> -->
                                 <a href="{{url('/delete')}}{{$alluserinfo->User_ID}}" onclick="return confirm('Are You Sure ?')">Delete</a>
                                  <a href="{{url('/edit_details')}}{{$alluserinfo->User_ID}}">Edit</a>
-                                 <a href="{{url('/change_pass_rout')}}{{$alluserinfo->User_ID}}">Change Password</a>
+                                 <a href="{{url('/change_pass_rout')}}">Change Password</a>
 
                         </tr>
                     </tbody>

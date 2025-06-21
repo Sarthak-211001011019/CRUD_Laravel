@@ -15,7 +15,6 @@
         <div class="alert alert-danger">
         {{session('Message')}}
         </div>
-        <script>alert('Message')</script>
           @endif
         
         <form method="POST" action="{{url('/login_details_rout')}}">

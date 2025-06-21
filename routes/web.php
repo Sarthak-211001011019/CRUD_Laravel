@@ -41,8 +41,8 @@ Route::post('/update_details',[DemoController::class,'update_details']);
 Route ::get ('/sign_in', [DemoController::class, 'user_login']);
 Route::post('/login_details_rout',[DemoController::class,'login_details_check']);
 Route::get('/login_display_rout',[DemoController::class,'user_display']);
-//chnage passsword
-Route::get('/change_pass_rout{changepass_id}',[DemoController::class,'change_pass']);
+//change passsword
+Route::get('/change_pass_rout',[DemoController::class,'change_pass']);
 Route::post('/change_pass_logic',[DemoController::class,'Newpass_logic']);
 
 
