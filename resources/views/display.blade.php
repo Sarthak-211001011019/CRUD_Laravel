@@ -39,16 +39,20 @@
                             <td><a href="tel:{{ $userData->Email }}">{{ $userData->Phone }}</a></td>
                             <td>{{ $userData->Password }}</td>
                              <td>{{ $userData->User_Type }}</td>
+
                             <td><img src="{{ $userData->Image }}" alt="User Image" style="width: 100px; height: 100px;"></td>  
+                            
                             <td>
                                 <!-- <a href="{{ url('/edit_form/'.$userData->User_ID) }}">Edit</a> |
                                 <a href="{{ url('/delete_form/'.$userData->User_ID) }}" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a> -->
                                 <a href="{{url('/delete')}}{{$userData->User_ID}}" onclick="return confirm('Are You Sure ?')">Delete</a>
                                  <a href="{{url('/edit_details')}}{{$userData->User_ID}}">Edit</a>
+                                 @if($userData->Auth_Status == 0)
                                  <a href="{{ route('auth_rout', ['id' => $userData->User_ID, 'operation' => 'Block']) }}"class="btn btn-danger btn-sm">Block</a>
-
-
+                                 @endif
+                                 @if($userData->Auth_Status == 1)
                                  <a href="{{ route('auth_rout', ['id' => $userData->User_ID, 'operation' => 'Unblock']) }}" class="btn btn-success btn-sm">Un-block</a>
+                                 @endif
                                  <a href="{{url('/logout_rout')}}"><button>LogOut</button></a>
 
                         </tr> @endforeach
