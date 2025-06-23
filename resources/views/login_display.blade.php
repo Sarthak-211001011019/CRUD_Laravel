@@ -33,6 +33,7 @@
                             <th>Email</th>
                             <th>Phone No</th>
                             <th>Password</th>
+                            <th>User__Type</th>
                             <th>Image</th>
                             <th>Action</th>
                         </tr>
@@ -44,6 +45,7 @@
                             <td> <a href="mailto:{{ $alluserinfo->Email }}">{{ $alluserinfo->Email }}</a> </td>
                             <td><a href="tel:{{ $alluserinfo->Email }}">{{ $alluserinfo->Phone }}</a></td>
                             <td>{{ $alluserinfo->Password }}</td>
+                            <td>{{ $alluserinfo->User_Type }}</td>
                             <td><img src="{{ $alluserinfo->Image }}" alt="User Image" style="width: 100px; height: 100px;"></td>  
                             <td>
                                 <!-- <a href="{{ url('/edit_form/'.$alluserinfo->User_ID) }}">Edit</a> |

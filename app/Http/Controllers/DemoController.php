@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View; 
 use Illuminate\Support\Facades\DB;     // Importing the DB facade to interact with the database
+header('Cache-Control:no-Catch,no-store');  // this is used to clear the cache form browser after the session is destroied
 
 class DemoController extends Controller
 {
@@ -56,7 +57,7 @@ class DemoController extends Controller
          return redirect('/sign_in');      // remember redirect means goin to rout(web.php ->controller->view)                                                                      
     }
 
-    public function display_data(Request $req)
+    public function display_all_data(Request $req)
     {
         // dd($req->all()); // This will dump and die, showing all the data submitted by the Signup form
         $fetchdata= DB::table('1_laravel')->get();
@@ -145,7 +146,7 @@ class DemoController extends Controller
          $login_data = DB::table('1_laravel')->where('Email', $emailphone)->orWhere('Phone',$emailphone)->get()->first();
 
          if(empty($login_data)){
-            return redirect('/sign_in')->with('Message','User Not Found  !');
+            return redirect('/signin_rout')->with('Message','User Not Found  !');
          }
          else{
             $db_password = $login_data->Password;
@@ -153,12 +154,23 @@ class DemoController extends Controller
             {
                 $user_id = $login_data->User_ID;
                 $user_name = $login_data->Name;
+                $user_type = $login_data->User_Type;
+                $user_auth = $login_data->Auth_Status;
                 $req->session()->put('session_id', $user_id);
                 $req->session()->put('session_name', $user_name);
-                return redirect('/login_display_rout');  // go to login rout in  web.php
+                $req->session()->put('session_usertype', $user_type);
+                if($user_type==='Admin'){
+                    return redirect('/admin_display_rout');  // go to admin_display-rout in  web.php
+                } else{
+                    if($user_auth == 0){
+                        return redirect('/login_display_rout');  // go to user_display rout in  web.php
+                    }
+                    
+                }
+                
             }
             else{
-                return redirect('/sign_in')->with('Message','Password Dosent Match');
+                return redirect('/signin_rout')->with('Message','Password Dosent Match');
             } 
          }
 
@@ -214,6 +226,34 @@ class DemoController extends Controller
         }
          
     }// Password Change 
+
+    public function auth_logic($id , $operation)
+    {  
+        if($operation==='Block'){
+            $auth_sta = ['Auth_Status'=>1];
+            $update_auth_status = DB::table('1_laravel')->where('User_ID',$id)->update($auth_sta);
+            if($update_auth_status){
+                return redirect('/admin_display_rout');            
+            }
+        }
+        if($operation==='Unblock'){
+            $auth_sta = ['Auth_Status'=>0];
+            $update_auth_status = DB::table('1_laravel')->where('User_ID',$id)->update($auth_sta);
+             if($update_auth_status){
+                return redirect('/admin_display_rout');            
+            }
+        }
+
+    }//auth_logic
+
+    public function logout_logic(Request $req)
+    {
+        $req->session()->flush();   // this is use to turn off the session 
+        
+        $req->session()->forget('session_id'); // destory session for this id 
+
+        return redirect('/signin_rout'); 
+    }
 
 
 } /// Democontroller close 
