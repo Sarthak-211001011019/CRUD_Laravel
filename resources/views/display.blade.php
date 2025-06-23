@@ -40,10 +40,8 @@
 
                         </tr> @endforeach
                     </tbody>
-
                 </table>
             </div>   
-
          @endif
     
 </body>

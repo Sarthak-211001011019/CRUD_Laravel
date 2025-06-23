@@ -14,6 +14,7 @@
         {{session('session_name')}}
     </div>
 @endif
+
 @if(session('Message'))
     <script>
     alert("{{session('Message')}}");

@@ -28,12 +28,11 @@ Route::get('/first', [DemoController::class, 'first_example']);
 Route::get('/signup', [DemoController::class, 'signup_form']);  
 Route::post('/submit', [DemoController::class, 'submit_form']);        // new function in democontroller.php for form submission 
 Route::get('/display', [DemoController::class, 'display_data']);
-
-// Update and Delete Routes
-// Route::get('/edit_form/{User_ID}', [DemoController::class, 'edit_userdata']);
-// Route::post('/update_form/{User_ID}', [DemoController::class, 'update_form']);   
+//practice edit 
+// Route::get('/edit_form/{User_ID}', [DemoController::class, 'edit_userdata']); 
 // Route::get('/delete_form/{User_ID}', [DemoController::class, 'delete_data']);
 
+// Update and Delete Routes
 Route::get('/delete{delete_id}',[DemoController::class,'delete_user']);
 Route::get('/edit_details{edit_id}',[DemoController::class,'edit_user_details']);
 Route::post('/update_details',[DemoController::class,'update_details']);

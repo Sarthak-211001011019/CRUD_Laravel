@@ -15,12 +15,16 @@
                 <li>{{ $error }}</li>
             @endforeach    
         </div>
-    @endif    
+    @endif   
+
     <div class="header modal-header">
         <h3>SignUp Page </h3>
     </div>
+
         <form method="POST" action="{{url('/submit')}}" enctype="multipart/form-data" >
+
             @csrf  <!-- CSRF token for security -->   <!--    go-to app/Middleware/VerifyCsrfToken.php    -->
+            
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="Name" placeholder="Enter your name" required>

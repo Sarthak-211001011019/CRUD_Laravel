@@ -18,6 +18,7 @@
     @endif
 
     <form method="POST" action="{{ url('/update_form/'.$userdetails->User_ID) }}">
+
         @csrf
        
         <label>Name:</label><br>
@@ -40,7 +41,9 @@
         
         <button type="submit">Update</button>
         <a href="{{ url('/display') }}">Cancel</a>
+        
         @endif
+
     </form>
 
 </body>

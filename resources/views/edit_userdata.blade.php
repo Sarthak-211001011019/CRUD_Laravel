@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
+
 @if(isset($Userdata))
 <div class="container">
     @if($errors->any())
@@ -15,7 +16,9 @@
                 <li>{{ $error }}</li>
             @endforeach    
         </div>
-    @endif    
+
+    @endif   
+
     <div class="header modal-header">
         <h3>SignUp Page </h3>
     </div>
@@ -54,7 +57,9 @@
 
         </form> 
 </div>
-@endif    
+
+@endif  
+  
 </body>
 </html> 
 
