@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View; 
 use Illuminate\Support\Facades\DB;     // Importing the DB facade to interact with the database
 header('Cache-Control:no-Catch,no-store');  // this is used to clear the cache form browser after the session is destroied
+// header('Cache-Control: no-Cache, no-store');
 
 class DemoController extends Controller
 {
@@ -248,11 +249,10 @@ class DemoController extends Controller
 
     public function logout_logic(Request $req)
     {
-        $req->session()->flush();   // this is use to turn off the session 
-        
-        $req->session()->forget('session_id'); // destory session for this id 
-
-        return redirect('/signin_rout'); 
+        $req->session()->flush();
+        $req->session()->forget('session_id');
+         $req->session()->forget('session_usertype');
+        return redirect('/signin_rout')->with('Message',"Logged out successfully"); 
     }
 
 

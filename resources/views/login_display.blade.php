@@ -53,6 +53,7 @@
                                 <a href="{{url('/delete')}}{{$alluserinfo->User_ID}}" onclick="return confirm('Are You Sure ?')">Delete</a>
                                  <a href="{{url('/edit_details')}}{{$alluserinfo->User_ID}}">Edit</a>
                                  <a href="{{url('/change_pass_rout')}}">Change Password</a>
+                                 <a href="{{url('/logout_rout')}}"><button>LogOut</button></a>
 
                         </tr>
                     </tbody>
